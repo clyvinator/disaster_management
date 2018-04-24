@@ -83,7 +83,7 @@ def a():
 	humidity_wma = 0
 	i_wma = 0
 	try:
-		rain_num = cursor.execute("""SELECT * from weather_condition where rain = 0 ORDER BY id ASC""")
+		rain_num = cursor.execute("""SELECT * from weather_condition where rain = 1 ORDER BY id ASC""")
 	except Exception as e:
 		print("ERROR",e)
 		return
