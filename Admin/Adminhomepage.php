@@ -246,6 +246,7 @@
         });     
     </script>
     <script>
+      var map;
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
@@ -275,17 +276,51 @@
         var infowindow = new google.maps.InfoWindow({
           
         });
+
+
+
+
         var heat_wave_image = './heat_wave.png';
         var severe_heat_wave_image = './severe_heat_wave.png'
         var flood_image = './flood_icon.png'
         var uv_image = './uv_index.png'
+        var mangalore = {lat: 12.914, lng: 74.856}
 
-        var beachMarker = new google.maps.Marker({
-          position: {lat: -33.890, lng: 151.274},
-          map: map,
-          icon: image
-        });
+
+
+
+        // var beachMarker = new google.maps.Marker({
+        //   position: mangalore,
+        //   map: map,
+        //   icon: {
+        //     url: flood_image, // url
+        //     scaledSize: new google.maps.Size(50, 50), // scaled size
+        //   }
+        // });
       
+
+     
+    var arr;
+      $.ajax({
+        url:"getCalamities.php",
+        type:"GET",
+        async: true,
+        success:function(data){
+          for(var i=0; i<data.length; i++) {
+            new google.maps.Marker({
+              position: {lat: parseFloat(data[i][3]), lng: parseFloat(data[i][4])},
+              map: map,
+              icon: {
+                url: flood_image, // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+              }
+            });
+          }  
+        },
+        dataType:"json"
+      });
+    
+    
         autocomplete.addListener('place_changed', function() {
           infowindow.close();
           // marker.setVisible(false);
@@ -342,6 +377,11 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxdjIou0AhSuzAysEOsU_068zYrR2si1E&libraries=places&callback=initMap"
         async defer></script>
+
+
+   
+
+
   </body>
 </html>
 <script type="text/javascript">
