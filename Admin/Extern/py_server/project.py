@@ -10,7 +10,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import requests
 import threading
 import pymysql
-url = 'http://api.wunderground.com/api/734576e4a6e375ca/conditions/q/India/Mangalore.json'
+url = 'http://api.wunderground.com/api/734576e4a6e375ca/conditions/q/India/Hassan.json'
 db = pymysql.connect("localhost","root","root","disaster")
 cursor = db.cursor()
 # cursor.execute("SELECT * from weather_condition")
@@ -28,8 +28,7 @@ def a():
 	curr_temp = int(response['current_observation']['temp_c'])
 	curr_humidity = int(response['current_observation']['relative_humidity'][0:2])
 	curr_pressure = int(response['current_observation']['pressure_mb'])
-	curr_uv_index = 12
-	# int(response['current_observation']['UV'])
+	curr_uv_index = int(response['current_observation']['UV'])
 	curr_location = response['current_observation']['display_location']['full']
 	curr_city = response['current_observation']['display_location']['city']
 	curr_lat = response['current_observation']['observation_location']['latitude']
