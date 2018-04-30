@@ -25,9 +25,9 @@ def a():
 		return
 	response = json.loads(response.content)
 	print(str(datetime.datetime.now()))
-	curr_temp = int(response['current_observation']['temp_c'])
-	curr_humidity = int(response['current_observation']['relative_humidity'][0:2])
-	curr_pressure = int(response['current_observation']['pressure_mb'])
+	curr_temp = int(float(response['current_observation']['temp_c']))
+	curr_humidity = int(float(response['current_observation']['relative_humidity'][0:2]))
+	curr_pressure = int(float(response['current_observation']['pressure_mb']))
 	curr_uv_index = int(response['current_observation']['UV'])
 	curr_location = response['current_observation']['display_location']['full']
 	curr_city = response['current_observation']['display_location']['city']
