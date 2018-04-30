@@ -307,11 +307,37 @@
         async: true,
         success:function(data){
           for(var i=0; i<data.length; i++) {
+            var lat = parseFloat(data[i][3]);
+            var lng = parseFloat(data[i][4]);
+            var img;
+              switch(data[i][1]) 
+              {
+                case "High uv index": 
+                lat += 0.02;
+                lng += 0.02;
+                img = uv_image;
+                break
+                case "Severe heat wave": 
+                lat += 0.02;
+                lng -= 0.02;
+                img = severe_heat_wave_image;
+                break;
+                case "Heat wave": 
+                lat -= 0.02;
+                lng += 0.02;
+                img = heat_wave_image;
+                break;
+                case "flood": 
+                lat -= 0.02;
+                lng -= 0.02;
+                img = flood_image;
+                break;
+              }
             new google.maps.Marker({
-              position: {lat: parseFloat(data[i][3]), lng: parseFloat(data[i][4])},
+              position: {lat: lat, lng: lng},
               map: map,
               icon: {
-                url: flood_image, // url
+                url: img, // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
               }
             });
