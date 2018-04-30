@@ -7,16 +7,13 @@
 		while($row = mysql_fetch_array($rs)){
 			$images = $row['image'];
 		}
-		$state = $_POST['txtstate'];
-		$district = $_POST['txtdistrict'];
-		$latlon = $_POST['txtlatlon'];
-		$name = $_POST['txtname'];
-		$username = $_POST['txtusername'];
-		$password = $_POST['txtpassword'];
-		$contact = $_POST['txtcontact'];
+		$title = $_POST['txttitle'];
+		$location = $_POST['txtlocation'];
+		$email = $_POST['txtemail'];
+		$phone = $_POST['txtphone'];
 		
-		if($username != ""){
-				$sql = "update rescue set username='".ESQ($username)."',password='".ESQ($password)."',contact='".ESQ($contact)."' where rid=".$rid;
+		if($email != "" && $phone != ""){
+				$sql = "update rescue set email='".ESQ($email)."',location='".ESQ($location)."',phone='".ESQ($phone)."' where rid=".$rid;
 				mysql_query($sql);
 			}
 ?><!DOCTYPE html>
@@ -82,7 +79,7 @@
 		<div style="box-shadow:0 1px 1px rgba(255, 255, 255, 0)">
 		<div class="box-body">
         <div class="box-header with-border" style="background-color:#fff;border-radius:4px 4px 0 0">
-          <h3 class="box-title"><b>Edit Weather Station</b></h3>
+          <h3 class="box-title"><b>Edit Rescue Team</b></h3>
         </div>
 		<?php	$sql = "select * from rescue where rid=".$rid;
 				$rs = mysql_query($sql);
@@ -108,19 +105,13 @@
              <div class="form-group">
             	<label class="col-sm-2" style="margin-bottom:10px">Email ID : </label>
             	<div class = "col-sm-10">
-            		<input type="text" class="form-control" name="txtusername" id="txtusername" value="<?php print $row['username']; ?>" style="margin-bottom:10px">
+            		<input type="text" class="form-control" name="txtemail" id="txtemail" value="<?php print $row['username']; ?>" style="margin-bottom:10px">
             	</div>
             </div>
              <div class="form-group">
-            	<label class="col-sm-2" style="margin-bottom:10px">Password : </label>
+            	<label class="col-sm-2" style="margin-bottom:10px">Phone : </label>
             	<div class = "col-sm-10">
-            		<input type="text" class="form-control" name="txtpassword" id="txtpassword" value="<?php print $row['password']; ?>" style="margin-bottom:10px">
-            	</div>
-            </div>
-             <div class="form-group">
-            	<label class="col-sm-2" style="margin-bottom:10px">Contact : </label>
-            	<div class = "col-sm-10">
-            		<input type="text" class="form-control" name="txtcontact" id="txtcontact" value="<?php print $row['contact']; ?>" style="margin-bottom:10px">
+            		<input type="text" class="form-control" name="txtphone" id="txtphone" value="<?php print $row['password']; ?>" style="margin-bottom:10px">
             	</div>
             </div>
 			<div class="row-md-1">
@@ -131,10 +122,9 @@
   </div></form><?php } ?>
 			<script type="text/javascript">
 				function submit_new(){
-					var username = document.getElementById('txtusername').value;
-					var password = document.getElementById('txtpassword').value;
-					var contact = document.getElementById('txtcontact').value;
-					if(username != "" && password != "" && contact != ""){
+					var email = document.getElementById('txtemail').value;
+					var phone = document.getElementById('txtphone').value;
+					if(email != "" && phone != ""){
 						document.forms['frmnews'].submit();
 					}
 					else

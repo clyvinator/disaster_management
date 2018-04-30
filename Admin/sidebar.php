@@ -11,18 +11,25 @@
         </li>
 		<li class="treeview">
           <a href="#">
-            <i class="fa fa-cloud"></i>
+            <i class="fa fa-ambulance"></i>
             <span>Rescue Team</span>
           </a>
           <ul class="treeview-menu" style="display: none;">
+            <li><a href="list_user.php"><i class="fa fa-align-center"></i>List</a></li>
             <li><a href="add_rescue.php"><i class="fa fa-plus"></i>Add</a></li>
             <li><a href="list_rescue.php"><i class="fa fa-pencil-square-o"></i>Edit/Delete</a></li>
           </ul>
         </li>
-	    <li class="treeview">
-          <a href="list_user.php">
-            <i class="fa fa-pencil-square-o"></i> <span>View Rescue Team</span> 
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-user"></i>
+            <span>Citizens</span>
           </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="list_citizen_user.php"><i class="fa fa-align-center"></i>List</a></li>
+            <li><a href="add_citizen.php"><i class="fa fa-plus"></i>Add</a></li>
+            <li><a href="list_citizen.php"><i class="fa fa-pencil-square-o"></i>Edit/Delete</a></li>
+          </ul>
         </li>
 		<li class="treeview">
           <a href="disaster_profile.php">

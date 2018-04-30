@@ -28,9 +28,12 @@ def a():
 	curr_temp = int(response['current_observation']['temp_c'])
 	curr_humidity = int(response['current_observation']['relative_humidity'][0:2])
 	curr_pressure = int(response['current_observation']['pressure_mb'])
-	curr_uv_index = int(response['current_observation']['UV'])
+	curr_uv_index = 12
+	# int(response['current_observation']['UV'])
 	curr_location = response['current_observation']['display_location']['full']
 	curr_city = response['current_observation']['display_location']['city']
+	curr_lat = response['current_observation']['observation_location']['latitude']
+	curr_lon = response['current_observation']['observation_location']['longitude']
 	if("Rain" in response['current_observation']['weather']):
 		curr_rain = 1
 	else:
@@ -52,7 +55,7 @@ def a():
 		               ORDER BY id DESC LIMIT 1000 OFFSET 7)as t)""")
 		if(curr_uv_index > 7):
 			print("\nHigh UV index\n")
-			cursor.execute("""INSERT into calamity(type, place) values('High uv index','%s')""" % (curr_city) )
+			cursor.execute("""INSERT into calamity(type, place, lat, lon) values('High uv index','%s','%s','%s')""" % (curr_city,curr_lat,curr_lon) )
 		db.commit()
 		print("\nCurrent condition written to DB\n")
 
@@ -64,7 +67,7 @@ def a():
 	if(curr_temp >= temp_avg_mangalore + 6.4):
 		try:
 			print("\nSevere Heat wave\n")
-			cursor.execute("""INSERT into calamity(type, place) values('Severe heat wave', '%s')""" %(curr_city))	
+			cursor.execute("""INSERT into calamity(type, place) values('Severe heat wave', '%s','%s','%s')""" % (curr_city,curr_lat,curr_lon) )
 			db.commit()
 		except Exception as e:
 			print("ERROR ",e)
@@ -73,7 +76,7 @@ def a():
 		if(curr_temp >= temp_avg_mangalore + 4.5):
 			try:
 				print("\nHeat wave\n")
-				cursor.execute("""INSERT into calamity(type, place) values('Heat wave', '%s')""" %(curr_city))	
+				cursor.execute("""INSERT into calamity(type, place) values('Heat wave', '%s','%s','%s')""" % (curr_city,curr_lat,curr_lon) )
 				db.commit()
 			except Exception as e:
 				print("ERROR ",e)
@@ -83,7 +86,7 @@ def a():
 	humidity_wma = 0
 	i_wma = 0
 	try:
-		rain_num = cursor.execute("""SELECT * from weather_condition where rain = 1 ORDER BY id ASC""")
+		rain_num = cursor.execute("""SELECT * from weather_condition where rain = 0 ORDER BY id ASC""")
 	except Exception as e:
 		print("ERROR",e)
 		return
@@ -169,7 +172,7 @@ def a():
 		if(int(pred_result[0]) == 1):
 			print("\nFlood\n")
 			try:
-				cursor.execute("""INSERT into calamity(type, place) values('flood','%s')""" %(curr_city))
+				cursor.execute("""INSERT into calamity(type, place) values('flood','%s','%s','%s')""" % (curr_city,curr_lat,curr_lon) )
 				db.commit()
 			except Exception as e:
 				db.rollback()

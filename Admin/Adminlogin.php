@@ -108,9 +108,9 @@
 			$mail->SMTPSecure = 'ssl'; 
 			$mail->Port = 465;
 			$mail->Host = 'smtp.gmail.com';                 // Specify main and backup SMTP servers                       
-			$mail->Username = 'priyashrinivas24@gmail.com';                 // SMTP username
-			$mail->Password = 'natural24@';                           // SMTP password                                              
-			$mail->setFrom('priyashrinivas24@gmail.com', 'Disater Mgmt.');
+			// $mail->Username = 'priyashrinivas24@gmail.com';                 // SMTP username
+			// $mail->Password = 'natural24@';                           // SMTP password                                              
+			// $mail->setFrom('priyashrinivas24@gmail.com', 'Disater Mgmt.');
 			$mail->addAddress($username);     // Add a recipient
 			$mail->Subject = 'Disater Mgmt. - Forgot Password';
 			$mail->Body    = 'This is the HTML message body <b>in bold!</b>';

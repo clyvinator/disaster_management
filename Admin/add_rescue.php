@@ -1,31 +1,20 @@
 <?php 	include("database.php");
-		
 		$location = $_POST['txtlocation'];
 		$title = $_POST['txttitle'];
-		$username = $_POST['txtusername'];
-		$password = $_POST['txtpassword'];
-		$contact = $_POST['txtcontact'];
-		
-		if($title != ""){
-			$sql = "select max(rid) as rid from rescue";
-			$rs = mysql_query($sql);
-			$rid = 0;
-			while($row = mysql_fetch_array($rs)){
-				$rid = $row['rid'];
-			}
-			if($rid == ""){
-				$rid = 0;
-			}
-			$rid = $rid + 1;
-			$sql = "insert into rescue values(".$rid.",'".ESQ($location)."','".ESQ($title)."','".ESQ($username)."','".ESQ($password)."','".ESQ($contact)."')";
-			mysql_query($sql);
-		}
+		$email = $_POST['txtemail'];
+		$phone = $_POST['txtphone'];
+    if($location != "" && $title != "" && $email != "" && $phone != "")
+    {
+      $sql = "insert into rescue(location, title, email, phone) values('".ESQ($location)."','".ESQ($title)."','".ESQ($email)."','".ESQ($phone)."')";
+      mysql_query($sql);
+    }	
+
 ?><!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Mobile CRS</title>
+  <title>Add Rescue</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -82,7 +71,7 @@
 		<div style="box-shadow:0 1px 1px rgba(255, 255, 255, 0)">
 		<div class="box-body">
         <div class="box-header with-border" style="background-color:#fff;border-radius:4px 4px 0 0">
-          <h3 class="box-title"><b>Add Weather Station</b></h3>
+          <h3 class="box-title"><b>Add Rescue Team</b></h3>
         </div>
 			<form class="form" name="frmnews" method="post" action="add_rescue.php" enctype="multipart/form-data">
             <div class="panel">
@@ -91,7 +80,7 @@
             	<label class="col-sm-2" style="margin-bottom:10px">Location : </label>
             	<div class = "col-sm-10">
             		<select class="form-control" name="txtlocation" id="txtlocation" style="margin-bottom:10px">
-						<option selected disabled>Select a Location</option>
+						<option selected disabled>Select a City</option>
 						<?php	$sql = "select * from location";
 								$rs = mysql_query($sql);
 								while($row = mysql_fetch_array($rs)){ ?>
@@ -109,24 +98,18 @@
              <div class="form-group">
             	<label class="col-sm-2" style="margin-bottom:10px">Email ID : </label>
             	<div class = "col-sm-10">
-            		<input type="text" class="form-control" name="txtusername" id="txtusername" style="margin-bottom:10px">
+            		<input type="text" class="form-control" name="txtemail" id="txtemail" style="margin-bottom:10px">
             	</div>
             </div>
              <div class="form-group">
-            	<label class="col-sm-2" style="margin-bottom:10px">Password : </label>
+            	<label class="col-sm-2" style="margin-bottom:10px">Phone : </label>
             	<div class = "col-sm-10">
-            		<input type="text" class="form-control" name="txtpassword" id="txtpassword" style="margin-bottom:10px">
-            	</div>
-            </div>
-             <div class="form-group">
-            	<label class="col-sm-2" style="margin-bottom:10px">Contact : </label>
-            	<div class = "col-sm-10">
-            		<input type="text" class="form-control" name="txtcontact" id="txtcontact" style="margin-bottom:10px">
+            		<input type="text" class="form-control" name="txtphone" id="txtphone" style="margin-bottom:10px">
             	</div>
             </div>
 			<div class="row-md-1">
 			 <button type="reset" class="btn btn-primary pull-left" style="border:0px;width:100px;margin-top:20px">Reset</button>
-			 <input type="button" value="Submit" onclick="submit_new();" class="btn btn-primary pull-right" style="border:0px;width:100px;margin-top:20px">
+			 <input type="button" value="Submit" onsubmit="submit_new();" onclick="submit_new();" class="btn btn-primary pull-right" style="border:0px;width:100px;margin-top:20px">
 			</div>
     </div>
   </div></form>
@@ -134,10 +117,9 @@
 				function submit_new(){
 					var location = document.getElementById('txtlocation').value;
 					var title = document.getElementById('txttitle').value;
-					var username = document.getElementById('txtusername').value;
-					var password = document.getElementById('txtpassword').value;
-					var contact = document.getElementById('txtcontact').value;
-					if(location != "" && title != "" && username != "" && password != "" && contact != ""){
+					var email = document.getElementById('txtemail').value;
+					var phone = document.getElementById('txtphone').value;
+					if(location != "" && title != "" && email != "" && phone != ""){
 						document.forms['frmnews'].submit();
 					}
 					else
@@ -145,11 +127,6 @@
 						alert("All options are Madatory");
 						}
 				}
-				
-				$('#date .txtclass').datepicker({
-					'format': 'd-m-yyyy',
-					'autoclose': true
-				});
 
 			</script>
 </div>

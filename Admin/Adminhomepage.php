@@ -1,24 +1,17 @@
-<?php 	include("database.php");
-		
-		// $location = $_POST['txtlocation'];
-		// $lat = $_POST['txtlat'];
-		// $lon = $_POST['txtlon'];
-		// $pincode = $_POST['txtpincode'];
-		
-		// if($pincode != ""){
-		// 	$sql = "select max(lid) as lid from location";
-		// 	$rs = mysql_query($sql);
-		// 	$lid = 0;
-		// 	while($row = mysql_fetch_array($rs)){
-		// 		$lid = $row['lid'];
-		// 	}
-		// 	if($lid == ""){
-		// 		$lid = 0;
-		// 	}
-		// 	$lid = $lid + 1;
-		// 	$sql = "insert into location values(".$lid.",'".ESQ($location)."','".ESQ($lat)."','".ESQ($lon)."','".ESQ($pincode)."')";
-		// 	mysql_query($sql);
-		// }
+<?php
+      $location = $_POST['txtlocation'];
+        $lat = $_POST['txtlat'];
+        $lon = $_POST['txtlon'];
+        $pincode = $_POST['txtpincode'];
+      include("database.php");
+      // $fetch_calamities_sql = "SELECT * from calamity where active=1";
+      // $rs = mysql_query($fetch_calamities_sql);
+      // while($row = mysql_fetch_array($rs)) {
+      //   $type = $row['type'];
+      //   $place = $row['place'];
+      //   $id = $row['id'];
+      //   echo "<script type = 'text/javascript'>alert('$type,$id');</script>";
+      // }
 ?>
 <html>
   <head>
@@ -190,8 +183,7 @@
 		<input type="submit" value="Select" style="font-size:14px;padding:1px 6px 0px" onclick="showInput();"><br/>
 			<script language="JavaScript">
 			function showInput() {
-				document.getElementById('txtlocation').innerHTML = 
-							document.getElementById("pac-input").value;
+				document.getElementById('txtlocation').innerHTML = document.getElementById("pac-input").value;
 			}
 			</script>
 		
@@ -226,7 +218,7 @@
 <script src="../dist/js/demo.js"></script>
 
 	<script type="text/javascript">
-		function showPosition(){
+		function showPosition(){{
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(function(position){
 					var positionInfo = "{" + "lat: " + position.coords.latitude + ", " + "lng: " + position.coords.longitude + "}";
@@ -236,6 +228,7 @@
 				alert("Sorry, your browser does not support HTML5 geolocation.");
 			}
 		}
+  }
 	</script>
     <script>
         $.ajax({
@@ -262,7 +255,7 @@
           center: {lat: 12.914, lng: 74.856},
           zoom: 10
         });
-        var mangalore = { lat: 12.914, lng: 74.856 };
+        // var mangalore = { lat: 12.914, lng: 74.856 };
         // addMarker(mangalore, map);
         var card = document.getElementById('pac-card');
         var input = document.getElementById('pac-input');
@@ -278,40 +271,21 @@
         // bounds option in the request.
         autocomplete.bindTo('bounds', map);
 
-
-
-
-        var infowindowContent = "<p>TESTING<a href='http://www.k.com'>hkjl</a></p>"
+        
         var infowindow = new google.maps.InfoWindow({
-          content: infowindowContent
+          
         });
+        var heat_wave_image = './heat_wave.png';
+        var severe_heat_wave_image = './severe_heat_wave.png'
+        var flood_image = './flood_icon.png'
+        var uv_image = './uv_index.png'
 
-
-
-        var marker_icon_flood = {
-          url: "./flood_icon.png", // url
-          scaledSize: new google.maps.Size(50, 50), // scaled size
-      };
-
-
-
-        var marker = new google.maps.Marker({
-          position: mangalore,
+        var beachMarker = new google.maps.Marker({
+          position: {lat: -33.890, lng: 151.274},
           map: map,
-          title: 'Mangalore',
-          icon: marker_icon_flood
+          icon: image
         });
-
-
-
-        marker.addListener('click', function() {
-          infowindow.open(map, marker);
-          });
-        }
-
-
-
-
+      
         autocomplete.addListener('place_changed', function() {
           infowindow.close();
           // marker.setVisible(false);
@@ -330,8 +304,8 @@
             map.setCenter(place.geometry.location);
             map.setZoom(17);  // Why 17? Because it looks good.
           }
-          marker.setPosition(place.geometry.location);
-          marker.setVisible(true);
+          // marker.setPosition(place.geometry.location);
+          // marker.setVisible(true);
 
           var address = '';
           if (place.address_components) {
@@ -341,11 +315,6 @@
               (place.address_components[2] && place.address_components[2].short_name || '')
             ].join(' ');
           }
-
-          infowindowContent.children['place-icon'].src = place.icon;
-          infowindowContent.children['place-name'].textContent = place.name;
-          infowindowContent.children['place-address'].textContent = address;
-          infowindow.open(map, marker);
         });
 
         // Sets a listener on a radio button to change the filter type on Places
@@ -367,13 +336,16 @@
               console.log('Checkbox clicked! New state=' + this.checked);
               autocomplete.setOptions({strictBounds: this.checked});
             });
-      
+
+      }
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxdjIou0AhSuzAysEOsU_068zYrR2si1E&libraries=places&callback=initMap"
         async defer></script>
   </body>
 </html>
 <script type="text/javascript">
+
   $(function(){
   
   $(document).on('submit','#chatform',function(){
@@ -390,6 +362,18 @@
   
   });
   
+  function getMessages(){
+    // $.ajax({
+    //   type: "GET",
+    //   dataType: "jsonp",
+    //   async: false,
+    //   jsonpCallback: 'jsonCallback',
+    // contentType: "application/json",
+    //   url: "http://localhost:5000/"
+    // }).done(function( o ) {
+    //    var json_o = $.parseJSON(o);
+    //    alert(json_o);
+    // });
   function getCalamities(){
     <?php
       include("database.php");
@@ -399,14 +383,9 @@
         $type = $row['type'];
         $place = $row['place'];
         $id = $row['id'];
-        echo "<script type = 'text/javascript'></script>";
+        echo "<script type = 'text/javascript'>alert('$type,$id');</script>";
       }
     ?>
-  }
+
   
-  setInterval(function(){
-    getCalamities();
-  },5000);
-  
-});
 </script>
