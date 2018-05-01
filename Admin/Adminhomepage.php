@@ -273,6 +273,22 @@
         });     
     </script>
     <script>
+      var calamityArray = [];
+      function sendEmailAlert(a) {
+                var send = $.ajax({
+                  type: 'POST',
+                  url: "sendEmailAlert.php",
+                  data: {data: calamityArray[a.getAttribute('id')]},
+                  async: true,
+                  success: function(resultData) { alert("Email Alert Sent Successfully") },
+                  error: function(data) {alert("Something went wrong");}
+                });
+              }
+              send.error(function() { alert("Something went wrong"); });
+
+      function sendSMSAlert(a) {
+                alert(calamityArray[a.getAttribute('id')]);
+              }
       var map;
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
@@ -332,6 +348,7 @@
         async: true,
         success:function(data){
           for(var i=0; i<data.length; i++) {
+            calamityArray[data[i][0]] = data[i];
             var lat = parseFloat(data[i][3]);
             var lng = parseFloat(data[i][4]);
             var img;
@@ -361,15 +378,16 @@
             var marker = new google.maps.Marker({
               position: {lat: lat, lng: lng},
               map: map,
+              id: i, 
               icon: {
                 url: img, // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
               }
             });
-
-            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      
+              google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function() {
-                var content = "<center><h3>Disaster Alert</h3><h4>"+data[i][1]+"</center></h4><br/><input type='button' class='sms-alert' value='Send SMS Alert'/><input type='button' class='email-alert' value='Send Email Alert'/>";
+                var content = "<center><h3>Disaster Alert</h3><h4>"+data[i][1]+"</center></h4><br/><input type='button' class='sms-alert' id="+data[i][0]+" value='Send SMS Alert' onclick='sendSMSAlert(this)'/><input type='button' class='email-alert' id="+data[i][0]+" value='Send Email Alert' onclick='sendEmailAlert(this)'/>";
                 infowindow.setContent(content);
                 infowindow.open(map, marker);
               }
@@ -383,7 +401,6 @@
            infowindow.close();
         }
     });
-    
         autocomplete.addListener('place_changed', function() {
           infowindow.close();
           // marker.setVisible(false);
@@ -398,9 +415,10 @@
           // If the place has a geometry, then present it on a map.
           if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport);
+            map.setZoom(10);
           } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(17);  // Why 17? Because it looks good.
+            map.setZoom(10);  // Why 17? Because it looks good.
           }
           // marker.setPosition(place.geometry.location);
           // marker.setVisible(true);
@@ -449,34 +467,6 @@
 </html>
 <script type="text/javascript">
 
-  $(function(){
-  
-  $(document).on('submit','#chatform',function(){
-    var text= $.trim($("#text").val());
-    var name= $.trim($("#name").val());
-    if(text != "" && name != ""){
-      $.post('chatposter.php',{text: text, name: name},function(data){
-        $(".chatMessages").append(data);
-      });
-    }
-    else{
-      alert("Data Missing");
-    }
-  
-  });
-  
-  function getMessages(){
-    // $.ajax({
-    //   type: "GET",
-    //   dataType: "jsonp",
-    //   async: false,
-    //   jsonpCallback: 'jsonCallback',
-    // contentType: "application/json",
-    //   url: "http://localhost:5000/"
-    // }).done(function( o ) {
-    //    var json_o = $.parseJSON(o);
-    //    alert(json_o);
-    // });
   function getCalamities(){
     <?php
       include("database.php");
