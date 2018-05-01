@@ -4,6 +4,9 @@
         $lon = $_POST['txtlon'];
         $pincode = $_POST['txtpincode'];
       include("database.php");
+      if(!isset($_SESSION['username']) || !isset($_SESSION['otp'])) {
+        header('location:Adminlogin.php');
+      }
       // $fetch_calamities_sql = "SELECT * from calamity where active=1";
       // $rs = mysql_query($fetch_calamities_sql);
       // while($row = mysql_fetch_array($rs)) {
@@ -128,6 +131,30 @@
 	  
 	  #upload{padding:14px 12px}
 	  #uplimg{padding:14px 12px}
+
+    .email-alert {
+      color:blue; 
+      font-size:15px; 
+      font-weight:bold; 
+      text-align:center
+    }
+
+     .sms-alert {
+      background-color: #ffffff;
+      color:blue; 
+      font-size:15px; 
+      font-weight:bold; 
+      text-align:center
+    }
+    .sms-alert:active {
+      background-color: #aaaaaa;
+      color: red
+    }
+
+    .email-alert:active {
+      background-color: #aaaaaa;
+      color: red
+    }
     </style>
   </head>
   <body class="hold-transition skin-yellow-light sidebar-mini">
@@ -325,7 +352,7 @@
                 lng += 0.02;
                 img = heat_wave_image;
                 break;
-                case "flood": 
+                case "Flood": 
                 lat -= 0.02;
                 lng -= 0.02;
                 img = flood_image;
@@ -342,15 +369,20 @@
 
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function() {
-                  infowindow.setContent(data[i][1]);
-                  infowindow.open(map, marker);
+                var content = "<center><h3>Disaster Alert</h3><h4>"+data[i][1]+"</center></h4><br/><input type='button' class='sms-alert' value='Send SMS Alert'/><input type='button' class='email-alert' value='Send Email Alert'/>";
+                infowindow.setContent(content);
+                infowindow.open(map, marker);
               }
             })(marker, i));
           }  
         },
         dataType:"json"
       });
-    
+      google.maps.event.addListener(map, 'click', function() {
+        if(infowindow){
+           infowindow.close();
+        }
+    });
     
         autocomplete.addListener('place_changed', function() {
           infowindow.close();

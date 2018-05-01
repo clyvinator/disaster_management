@@ -1,4 +1,7 @@
 <?php 	include("database.php");
+    if(!isset($_SESSION['username']) || !isset($_SESSION['otp'])) {
+          header('location:Adminlogin.php');
+        }
 		$location = $_POST['txtlocation'];
 		$title = $_POST['txttitle'];
 		$email = $_POST['txtemail'];

@@ -1,4 +1,7 @@
 <?php 	include("database.php");
+if(!isset($_SESSION['username']) || !isset($_SESSION['otp'])) {
+          header('location:Adminlogin.php');
+        }
 		
 		$rid = $_GET['rid'];
 		

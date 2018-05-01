@@ -70,69 +70,69 @@
 </html>
 <?php
 		include('connect.php');
-		{
-			$username=$uname;
-				$sql=mysql_query("SELECT * FROM `admin` WHERE `username`='$username' ");
-				if($a=mysql_num_rows($sql))
-				{
-					while($row=mysql_fetch_array($sql))
-					{
-						$username=$row['username'];
-			//Random string
-			$str = "";
-			$characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
-			$max = count($characters) - 1;
-			for ($i = 0; $i < 6; $i++) {
-				$rand = mt_rand(0, $max);
-				$str .= $characters[$rand];
-			}
+		// {
+		// 	$username=$uname;
+		// 		$sql=mysql_query("SELECT * FROM `admin` WHERE `username`='$username' ");
+		// 		if($a=mysql_num_rows($sql))
+		// 		{
+		// 			while($row=mysql_fetch_array($sql))
+		// 			{
+		// 				$username=$row['username'];
+		// 	//Random string
+		// 	$str = "";
+		// 	$characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
+		// 	$max = count($characters) - 1;
+		// 	for ($i = 0; $i < 6; $i++) {
+		// 		$rand = mt_rand(0, $max);
+		// 		$str .= $characters[$rand];
+		// 	}
 			
-			$message=
-			'Hello, <b>ADMIN</b><br/><br/>
-			As you have requested, we have reset your OTP for '.$username.'.<br/><br/>
-			To Log into your account :
-			<ul><li>Copy this OTP : <b>'.$str.'<b><br></li>
-			<li>Type or paste the OTP to log in to your account.</li>
-			</ul><br/>
-			<br/>
-			Regards,<br/>
-			<b>Disaster Mgmt.</b>
-			';
-			require 'PHPMailer-master/PHPMailerAutoload.php';
+		// 	$message=
+		// 	'Hello, <b>ADMIN</b><br/><br/>
+		// 	As you have requested, we have reset your OTP for '.$username.'.<br/><br/>
+		// 	To Log into your account :
+		// 	<ul><li>Copy this OTP : <b>'.$str.'<b><br></li>
+		// 	<li>Type or paste the OTP to log in to your account.</li>
+		// 	</ul><br/>
+		// 	<br/>
+		// 	Regards,<br/>
+		// 	<b>Disaster Mgmt.</b>
+		// 	';
+		// 	require 'PHPMailer-master/PHPMailerAutoload.php';
 
-			$mail = new PHPMailer();
+		// 	$mail = new PHPMailer();
 
-			//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+		// 	//$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
-			$mail->isSMTP();  
-			$mail->SMTPDebug=0;                                    // Set mailer to use SMTP
-			$mail->SMTPAuth=true;
-			$mail->SMTPSecure = 'ssl'; 
-			$mail->Port = 465;
-			$mail->Host = 'smtp.gmail.com';                 // Specify main and backup SMTP servers                       
-			$mail->Username = 'priyashrinivas24@gmail.com';                 // SMTP username
-			$mail->Password = 'natural24@';                           // SMTP password                                              
-			$mail->setFrom('priyashrinivas24@gmail.com', 'Disaster Mgmt.');
-			$mail->addAddress($username);     // Add a recipient
-			$mail->Subject = 'Disaster Mgmt. - OTP';
-			$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-			$mail->MsgHTML($message);	
-			if(!$mail->send()) {
-				echo 'Message could not be sent.';
-				echo 'Mailer Error: ' . $mail->ErrorInfo;
-			} else {
-				echo "<script>alert('Request sent Successfully. Please ckeck your Email Account');
-				</script>";
-				$query=mysql_query("UPDATE `admin` SET `otp`='$str' WHERE `username`='$username'");
-			}
-					}
-				}
-				else
-				{
-					echo "<script>alert('Request Unsuccessfull.');
-					window.location='index.php';
-					</script>";
-				}
+		// 	$mail->isSMTP();  
+		// 	$mail->SMTPDebug=0;                                    // Set mailer to use SMTP
+		// 	$mail->SMTPAuth=true;
+		// 	$mail->SMTPSecure = 'ssl'; 
+		// 	$mail->Port = 465;
+		// 	$mail->Host = 'smtp.gmail.com';                 // Specify main and backup SMTP servers                       
+		// 	$mail->Username = 'priyashrinivas24@gmail.com';                 // SMTP username
+		// 	$mail->Password = 'natural24@';                           // SMTP password                                              
+		// 	$mail->setFrom('priyashrinivas24@gmail.com', 'Disaster Mgmt.');
+		// 	$mail->addAddress($username);     // Add a recipient
+		// 	$mail->Subject = 'Disaster Mgmt. - OTP';
+		// 	$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+		// 	$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+		// 	$mail->MsgHTML($message);	
+		// 	if(!$mail->send()) {
+		// 		echo 'Message could not be sent.';
+		// 		echo 'Mailer Error: ' . $mail->ErrorInfo;
+		// 	} else {
+		// 		echo "<script>alert('Request sent Successfully. Please ckeck your Email Account');
+		// 		</script>";
+		// 		$query=mysql_query("UPDATE `admin` SET `otp`='$str' WHERE `username`='$username'");
+		// 	}
+		// 			}
+		// 		}
+		// 		else
+		// 		{
+		// 			echo "<script>alert('Request Unsuccessfull.');
+		// 			window.location='index.php';
+		// 			</script>";
+		// 		}
 				
-		} ?>
+		// } ?>

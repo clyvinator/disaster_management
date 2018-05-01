@@ -36,7 +36,7 @@
             <button class="btn btn-primary btn-lg" type="submit" name="submit" style="width:49%">Login</button>
             <button class="btn btn-primary btn-lg" type="reset" name="reset" style="width:49%">Reset</button>
             <label class="checkbox">
-                <span style="margin-left:25%;"> <a href="" name="forgotbtn" data-toggle="modal" data-target="#forgotModal1" style="color:#fff!important"> Forgot Password?</a></span>
+                <span style="margin-left:25%;"> <a href="" name="forgotbtn" data-toggle="modal" data-target="#forgotModal1" style="color:#000000!important"> Forgot Password?</a></span>
             </label>
         </div>
       </div>
@@ -98,30 +98,30 @@
 			';
 			require 'PHPMailer-master/PHPMailerAutoload.php';
 
-			$mail = new PHPMailer();
+			$mail = new PHPMailer;
 
 			//$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
 			$mail->isSMTP();  
 			$mail->SMTPDebug=0;                                    // Set mailer to use SMTP
 			$mail->SMTPAuth=true;
-			$mail->SMTPSecure = 'ssl'; 
-			$mail->Port = 465;
+			$mail->SMTPSecure = 'tls'; 
+			// $mail->Port = 587;
 			$mail->Host = 'smtp.gmail.com';                 // Specify main and backup SMTP servers                       
-			// $mail->Username = 'priyashrinivas24@gmail.com';                 // SMTP username
-			// $mail->Password = 'natural24@';                           // SMTP password                                              
-			// $mail->setFrom('priyashrinivas24@gmail.com', 'Disater Mgmt.');
+			$mail->Username = 'clydeshelton8888@gmail.com';                 // SMTP username
+			$mail->Password = 'clyde8888';                           // SMTP password                                              
+			$mail->setFrom('clydeshelton8888@gmail.com', 'Disaster Management.');
 			$mail->addAddress($username);     // Add a recipient
 			$mail->Subject = 'Disater Mgmt. - Forgot Password';
-			$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+			$mail->Body    = '';
+			$mail->AltBody = '';
 			$mail->MsgHTML($message);	
 			if(!$mail->send()) {
 				echo 'Message could not be sent.';
 				echo 'Mailer Error: ' . $mail->ErrorInfo;
 			} else {
-				echo "<script>alert('Request sent Successfully. Please ckeck your Email Account');
-				window.location='index.php';
+				echo "<script>alert('Request sent Successfully. Please check your Email Account');
+				window.location='Adminlogin.php';
 				</script>";
 				$query=mysql_query("UPDATE `admin` SET `password`='$str' WHERE `username`='$username'");
 			}
@@ -130,7 +130,7 @@
 				else
 				{
 					echo "<script>alert('Email ID not registered');
-					window.location='index.php';
+					window.location='Adminlogin.php';
 					</script>";
 				}
 				

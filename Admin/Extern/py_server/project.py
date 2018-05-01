@@ -171,7 +171,7 @@ def a():
 		if(int(pred_result[0]) == 1):
 			print("\nFlood\n")
 			try:
-				cursor.execute("""INSERT into calamity(type, place) values('flood','%s','%s','%s')""" % (curr_city,curr_lat,curr_lon) )
+				cursor.execute("""INSERT into calamity(type, place) values('Flood','%s','%s','%s')""" % (curr_city,curr_lat,curr_lon) )
 				db.commit()
 			except Exception as e:
 				db.rollback()
