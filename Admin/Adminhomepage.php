@@ -273,9 +273,7 @@
         autocomplete.bindTo('bounds', map);
 
         
-        var infowindow = new google.maps.InfoWindow({
-          
-        });
+        var infowindow = new google.maps.InfoWindow();
 
 
 
@@ -333,7 +331,7 @@
                 img = flood_image;
                 break;
               }
-            new google.maps.Marker({
+            var marker = new google.maps.Marker({
               position: {lat: lat, lng: lng},
               map: map,
               icon: {
@@ -341,6 +339,13 @@
                 scaledSize: new google.maps.Size(50, 50), // scaled size
               }
             });
+
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                  infowindow.setContent(data[i][1]);
+                  infowindow.open(map, marker);
+              }
+            })(marker, i));
           }  
         },
         dataType:"json"
