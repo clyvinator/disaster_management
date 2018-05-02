@@ -138,6 +138,28 @@
       font-weight:bold; 
       text-align:center
     }
+    .fadeMe {
+      opacity:    0.8; 
+      background: #000; 
+      width:      100%;
+      height:     100%; 
+      z-index:    10;
+      top:        0; 
+      left:       0; 
+      position:   fixed; 
+      visibility: hidden;
+    }
+    .fadeMeImg {
+      position: absolute; /* or absolute */
+      top: 50%;
+      left: 50%;
+      opacity:    1;
+      z-index: 11;
+    }
+    .loadingGif {
+      height: 90px;
+      width: 90px;
+    }
 
      .sms-alert {
       background-color: #ffffff;
@@ -158,6 +180,8 @@
     </style>
   </head>
   <body class="hold-transition skin-yellow-light sidebar-mini">
+    <div class="fadeMe" id="fadeMe"> <div class="fadeMeImg"><img class="loadingGif" src="https://loading.io/spinners/message/lg.messenger-typing-preloader.gif"/></div></div>
+   
 	<!-- Site wrapper -->
 	<div class="wrapper">
 
@@ -281,13 +305,31 @@
                   data: {data: calamityArray[a.getAttribute('id')]},
                   async: true,
                   success: function(resultData) { alert("Email Alert Sent Successfully") },
-                  error: function(data) {alert("Something went wrong");}
+                  error: function(data) {alert("Something went wrong");},
+                  beforeSend: function(){
+                     $(".fadeMe").css("visibility", "visible");
+                  },
+                  complete: function(){
+                      $(".fadeMe").css("visibility", "hidden");
+                  }
                 });
               }
-              send.error(function() { alert("Something went wrong"); });
 
       function sendSMSAlert(a) {
-                alert(calamityArray[a.getAttribute('id')]);
+                var send = $.ajax({
+                  type: 'POST',
+                  url: "sendSMSAlert.php",
+                  data: {data: calamityArray[a.getAttribute('id')]},
+                  async: true,
+                  success: function(resultData) { alert("SMS Alert Sent Successfully") },
+                  error: function(data) {alert("Something went wrong");},
+                  beforeSend: function(){
+                     $(".fadeMe").css("visibility", "visible");
+                  },
+                  complete: function(){
+                     $(".fadeMe").css("visibility", "hidden");
+                  }
+                });
               }
       var map;
       // This example requires the Places library. Include the libraries=places
@@ -418,7 +460,7 @@
             map.setZoom(10);
           } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(10);  // Why 17? Because it looks good.
+            map.setZoom(10);
           }
           // marker.setPosition(place.geometry.location);
           // marker.setVisible(true);
