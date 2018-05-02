@@ -68,10 +68,10 @@ def a():
 		# sys.exit(1)
 	response = json.loads(response.content)
 	print(str(datetime.datetime.now()))
-	curr_temp = int(float(response['current_observation']['temp_c']))
+	curr_temp = int(float(response['current_observation']['temp_c']));
 	curr_humidity = int(float(response['current_observation']['relative_humidity'][0:2]))
 	curr_pressure = int(float(response['current_observation']['pressure_mb']))
-	curr_uv_index = int(response['current_observation']['UV'])
+	curr_uv_index = int(response['current_observation']['UV']);
 	curr_location = response['current_observation']['display_location']['full']
 	curr_city = response['current_observation']['display_location']['city']
 	curr_lat = response['current_observation']['observation_location']['latitude']
@@ -109,7 +109,7 @@ def a():
 	if(curr_temp >= temp_avg_mangalore + 6.4):
 		try:
 			print("\nSevere Heat wave\n")
-			cursor.execute("""INSERT into calamity(type, place) values('Severe heat wave', '%s','%s','%s')""" % (curr_city,curr_lat,curr_lon) )
+			cursor.execute("""INSERT into calamity(type, place, lat, lon) values('Severe heat wave', '%s','%s','%s')""" % (curr_city,curr_lat,curr_lon) )
 			db.commit()
 		except Exception as e:
 			print("ERROR ",e)
@@ -119,7 +119,7 @@ def a():
 		if(curr_temp >= temp_avg_mangalore + 4.5):
 			try:
 				print("\nHeat wave\n")
-				cursor.execute("""INSERT into calamity(type, place) values('Heat wave', '%s','%s','%s')""" % (curr_city,curr_lat,curr_lon) )
+				cursor.execute("""INSERT into calamity(type, place, lat, lon) values('Heat wave', '%s','%s','%s')""" % (curr_city,curr_lat,curr_lon) )
 				db.commit()
 			except Exception as e:
 				print("ERROR ",e)
@@ -208,16 +208,24 @@ def a():
 		train_y_1d = train_y_1d.astype(np.float)
 		train_z_1d = train_z_1d.astype(np.float)
 
+		predictions = []
 
+		kNearestNeighbor((train_x.astype(np.float)).astype(np.int), (train_y.astype(np.float)).astype(np.int), (np.array([[temp_wma, humidity_wma, pressure_wma]])).astype(np.int), predictions, 12)
+		predictions = np.asarray(predictions)
 
+		print("\n\nK-NN prediction Rain => ",predictions[0]);
+		if(int(predictions[0]) == 1):
+			print("\nFlood\n")
+			try:
+				cursor.execute("""INSERT into calamity(type, place, lat, lon) values('Flood','%s','%s','%s')""" % (curr_city,curr_lat,curr_lon) )
+				db.commit()
+			except Exception as e:
+				db.rollback()
+				print("ERROR ",e)
+				return
+		db.close();
 
-	predictions = []
-
-	kNearestNeighbor((train_x.astype(np.float)).astype(np.int), (train_y.astype(np.float)).astype(np.int), (np.array([[temp_wma, humidity_wma, pressure_wma]])).astype(np.int), predictions, 12)
-	predictions = np.asarray(predictions)
-
-	# evaluating accuracy
-	return(predictions[0])
+		return(predictions[0])
 	
 # def setInterval(func,time):
 #     e = threading.Event()
