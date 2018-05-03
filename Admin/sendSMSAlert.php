@@ -26,7 +26,7 @@
 
 	    $message = 'ALERT! '.$data[1].' alert in location '.$data[2].' with Latitude '.$data[3].' and longitude '.$data[4].'. Requesting immedate support. Natural Disaster Management Dept.';
 	    
-	    $sql=mysql_query("select * from rescue where location='$data[2]'");
+	    $sql=mysql_query("select * from rescue where location='$data[2]' and `$data[1]`=1");
 		while($row=mysql_fetch_array($sql))
 		{
 			$citizenPhone=$row['phone'];

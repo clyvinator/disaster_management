@@ -18,6 +18,7 @@
 ?>
 <html>
   <head>
+    <!-- <meta http-equiv="refresh" content="5; URL=http://localhost/Admin/Adminhomepage.php"> -->
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -297,6 +298,7 @@
         });     
     </script>
     <script>
+      function initMap() {} 
       var calamityArray = [];
       function sendEmailAlert(a) {
                 var send = $.ajax({
@@ -336,7 +338,8 @@
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-      function initMap() {
+      $(() => {
+      initMap = function() {
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 12.914, lng: 74.856},
           zoom: 10
@@ -381,9 +384,9 @@
         //   }
         // });
       
-
-     
-    var arr;
+      map.markers = [];
+     function a() {
+      var arr;
       $.ajax({
         url:"getCalamities.php",
         type:"GET",
@@ -426,7 +429,7 @@
                 scaledSize: new google.maps.Size(50, 50), // scaled size
               }
             });
-      
+            map.markers.push(marker);
               google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function() {
                 var content = "<center><h3>Disaster Alert</h3><h4>"+data[i][1]+"</center></h4><br/><input type='button' class='sms-alert' id="+data[i][0]+" value='Send SMS Alert' onclick='sendSMSAlert(this)'/><input type='button' class='email-alert' id="+data[i][0]+" value='Send Email Alert' onclick='sendEmailAlert(this)'/>";
@@ -438,6 +441,18 @@
         },
         dataType:"json"
       });
+     }
+     setInterval(function(){ 
+      google.maps.Map.prototype.clearMarkers = function() {
+    for(var i=0; i < map.markers.length; i++){
+        map.markers[i].setMap(null);
+    }
+    map.markers = new Array();
+};
+google.maps.Map.prototype.clearMarkers();
+      a(); 
+    }, 3000);
+     
       google.maps.event.addListener(map, 'click', function() {
         if(infowindow){
            infowindow.close();
@@ -494,9 +509,11 @@
               console.log('Checkbox clicked! New state=' + this.checked);
               autocomplete.setOptions({strictBounds: this.checked});
             });
-
+  
       }
-
+    })
+  
+      
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxdjIou0AhSuzAysEOsU_068zYrR2si1E&libraries=places&callback=initMap"
         async defer></script>
