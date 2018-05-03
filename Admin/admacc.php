@@ -9,7 +9,7 @@
 		$password = $_POST['txtpassword'];
 		
 		if($username != ""){
-				$sql = "update admin set username='".ESQ($username)."',password='".ESQ($password)."'";
+				$sql = "update admin set password='".ESQ($password)."' where username='".ESQ($username)."'";
 				mysql_query($sql);
 			}
 ?>

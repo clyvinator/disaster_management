@@ -31,11 +31,6 @@
             <li><a href="list_citizen.php"><i class="fa fa-pencil-square-o"></i>Edit/Delete</a></li>
           </ul>
         </li>
-		<li class="treeview">
-          <a href="disaster_profile.php">
-            <i class="fa fa-search"></i> <span>Monitoring</span>
-          </a>
-        </li>
         </ul>
     </section>
     <!-- /.sidebar -->
