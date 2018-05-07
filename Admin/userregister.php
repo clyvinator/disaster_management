@@ -30,11 +30,11 @@
             </div>
             <div class="input-group">
                 <span class="input-group-addon"><i class="icon_mail"></i></span>
-                <input type="text" minlength="5" maxlength="20" class="form-control" name="email" placeholder="Email">
+                <input type="text" minlength="5" maxlength="50" class="form-control" name="email" placeholder="Email">
             </div>
             <div class="input-group">
               <span class="input-group-addon"><i class=" icon_phone"></i></span>
-              <input type="text" minlength="5" maxlength="20" class="form-control" name="phone" placeholder="Phone" autofocus>
+              <input type="text" minlength="13" maxlength="14" class="form-control" name="phone" placeholder="Phone" autofocus>
             </div>
             <select class="form-control" name="location" id="txtlocation" style="margin-bottom:10px">
             <option selected disabled>Select a City</option>
