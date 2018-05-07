@@ -109,7 +109,7 @@
              <div class="form-group">
             	<label class="col-sm-2" style="margin-bottom:10px">New Password : </label>
             	<div class = "col-sm-10">
-            		<input type="text" minlength="5" maxlength="50" class="form-control" name="txtpassword" id="txtpassword" value="" style="margin-bottom:10px">
+            		<input type="password" minlength="5" maxlength="50" class="form-control" name="txtpassword" id="txtpassword" value="" style="margin-bottom:10px">
             	</div>
             </div>
              <div class="form-group">

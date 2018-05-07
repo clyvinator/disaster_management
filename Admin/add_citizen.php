@@ -56,6 +56,7 @@
 </head>
 <body class="hold-transition skin-yellow-light sidebar-mini">
 <!-- Site wrapper -->
+<?php include('sidebar.php');?>
 <div class="wrapper">
   <?php include('header.php');?>
   <!-- =============================================== sidebar-->
