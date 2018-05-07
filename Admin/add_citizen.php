@@ -59,7 +59,6 @@
 <div class="wrapper">
   <?php include('header.php');?>
   <!-- =============================================== sidebar-->
-<?php include('sidebar.php'); ?>
   <!-- =============================================== sidebar end-->
 
   <!-- Content Wrapper. Contains page content -->

@@ -7,7 +7,8 @@ use Twilio\Rest\Client;
 	$username=$_POST['username'];
 	$password=$_POST['password'];
 	require_once('connect.php');
-	$query=mysql_query("select username,password from admin where username='$username' and password='$password'") or die(mysql_error());
+	$password_hash = crypt($password, substr($username, 0, 4));
+	$query=mysql_query("select username,password from admin where username='$username' and password='$password_hash'") or die(mysql_error());
 
 	 if(mysql_num_rows($query)==1)
 	 {

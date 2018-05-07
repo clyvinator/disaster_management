@@ -451,7 +451,7 @@
 };
 google.maps.Map.prototype.clearMarkers();
       a(); 
-    }, 3000);
+    }, 5000);
      
       google.maps.event.addListener(map, 'click', function() {
         if(infowindow){

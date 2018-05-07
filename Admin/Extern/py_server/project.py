@@ -56,7 +56,7 @@ def kNearestNeighbor(X_train, y_train, X_test, predictions, k):
 
 
 
-url = 'http://api.wunderground.com/api/734576e4a6e375ca/conditions/q/India/Hassan.json'
+url = 'http://api.wunderground.com/api/734576e4a6e375ca/conditions/q/India/Mangalore.json'
 db = pymysql.connect("localhost","root","root","disaster")
 cursor = db.cursor()
 def a():
@@ -178,26 +178,14 @@ def a():
 		test_x = [];
 		test_y = [];
 		for d in data:
-			# print(d);
-			# print("\n\n\n");
+			
 			train_x_1d.append(d['tempm']);
 			train_y_1d.append(d['hum']);
 			train_z_1d.append(d['pressurem']);
 			train_k_1d.append(d['rain']);
 			train_x.append([d['tempm'], d['hum'], d['pressurem']]);
 			train_y.append(d['rain']);
-		# for e in data_test:
-		# 	test_x_1d.append(e['tempm']);
-		# 	test_y_1d.append(e['hum']);
-		# 	test_z_1d.append(e['pressurem']);
-		# 	test_x.append([e['tempm'], e['hum'], e['pressurem']]);
-		# 	test_y.append(e['rain']);
-
-		# test_x_1d = array(test_x_1d);
-		# test_y_1d = array(test_y_1d);
-		# test_z_1d = array(test_z_1d);
-		# test_x = array(test_x);
-		# test_y = array(test_y);
+		
 		train_x_1d = array(train_x_1d);
 		train_y_1d = array(train_y_1d);
 		train_z_1d = array(train_z_1d);

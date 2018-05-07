@@ -27,11 +27,11 @@
             <p class="login-img"><i class="fa fa-cloud"></i></p>
             <div class="input-group">
               <span class="input-group-addon"><i class="icon_profile"></i></span>
-              <input type="text" class="form-control" name="username" placeholder="Username" autofocus>
+              <input type="text" minlength="5" maxlength="50" class="form-control" name="username" placeholder="Username" autofocus>
             </div>
             <div class="input-group">
                 <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-                <input type="password" class="form-control" name="password" placeholder="Password">
+                <input type="password" minlength="5" maxlength="20" class="form-control" name="password" placeholder="Password">
             </div>
             <button class="btn btn-primary btn-lg" type="submit" name="submit" style="width:49%">Login</button>
             <button class="btn btn-primary btn-lg" type="reset" name="reset" style="width:49%">Reset</button>
@@ -123,7 +123,8 @@
 				echo "<script>alert('Request sent Successfully. Please check your Email Account');
 				window.location='Adminlogin.php';
 				</script>";
-				$query=mysql_query("UPDATE `admin` SET `password`='$str' WHERE `username`='$username'");
+				$password_hash = crypt($str, substr($username, 0,4));
+				$query=mysql_query("UPDATE `admin` SET `password`='$password_hash' WHERE `username`='$username'");
 			}
 					}
 				}

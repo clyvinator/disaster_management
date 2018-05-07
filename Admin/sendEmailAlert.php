@@ -5,17 +5,13 @@
 		$data = $_POST['data'];
 		$mail = new PHPMailer;
 		$sql=mysql_query("select * from citizen where location='$data[2]'");
-		                 
-		//$mail->SMTPDebug = 3;                               // Enable verbose debug output
-
 		$mail->isSMTP();  
-		$mail->SMTPDebug=0;                                    // Set mailer to use SMTP
+		$mail->SMTPDebug=0;                                   
 		$mail->SMTPAuth=true;
 		$mail->SMTPSecure = 'tls'; 
-		// $mail->Port = 587;
-		$mail->Host = 'smtp.gmail.com';                 // Specify main and backup SMTP servers                       
-		$mail->Username = 'clydeshelton8888@gmail.com';                 // SMTP username
-		$mail->Password = 'clyde8888';                           // SMTP password                                              
+		$mail->Host = 'smtp.gmail.com';                 
+		$mail->Username = 'clydeshelton8888@gmail.com';                 
+		$mail->Password = 'clyde8888';                           
 		$mail->setFrom('clydeshelton8888@gmail.com', 'Disaster Management.');
 		$mail->Subject = 'Disater Mgmt. - ALERT';
 		$mail->Body    = '';
@@ -45,7 +41,6 @@
 		}
 		    $mail->ClearAllRecipients();
 		}
-
 
 	} catch (Exception $e) {
       die("Error");

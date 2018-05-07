@@ -7,9 +7,9 @@
 		}
 		$username = $_POST['txtusername'];
 		$password = $_POST['txtpassword'];
-		
+		$password_hash = crypt($password, substr($username, 0,4));
 		if($username != ""){
-				$sql = "update admin set password='".ESQ($password)."' where username='".ESQ($username)."'";
+				$sql = "update admin set password='".ESQ($password_hash)."' where username='".ESQ($username)."'";
 				mysql_query($sql);
 			}
 ?>
@@ -18,7 +18,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Fast Align</title>
+  <title>Account Settings</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -107,15 +107,15 @@
             	</div>
             </div>
              <div class="form-group">
-            	<label class="col-sm-2" style="margin-bottom:10px">Password : </label>
+            	<label class="col-sm-2" style="margin-bottom:10px">New Password : </label>
             	<div class = "col-sm-10">
-            		<input type="text" class="form-control" name="txtpassword" id="txtpassword" value="<?php print $row['password']; ?>" style="margin-bottom:10px">
+            		<input type="text" minlength="5" maxlength="50" class="form-control" name="txtpassword" id="txtpassword" value="" style="margin-bottom:10px">
             	</div>
             </div>
              <div class="form-group">
-            	<label class="col-sm-2">Confirm Password : </label>
+            	<label class="col-sm-2">Confirm New Password : </label>
             	<div class = "col-sm-10">
-            		<input type="password" class="form-control" id="txtconfirmpassword" name="txtconfirmpassword">
+            		<input type="password" minlength="5" maxlength="20" class="form-control" id="txtconfirmpassword" name="txtconfirmpassword">
 					<span id="message"></span>
             	</div>
             </div>
